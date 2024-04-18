@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { OrdersFacade } from 'src/+state/orders.facade';
 
 @Component({
   standalone: true,
@@ -11,12 +11,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  orders: any[] = [];
+  ordersFacade = inject(OrdersFacade);
   year = new Date().getFullYear();
-
-  constructor(http: HttpClient) {
-    http.get<any>('/api/order/1').subscribe((orders) => {
-      this.orders = orders;
-    });
-  }
 }

@@ -1,21 +1,27 @@
-﻿namespace Api.Controllers
+﻿namespace Api.Controllers;
+
+using Microsoft.AspNetCore.Mvc;
+using Api.Models;
+using Api.Infrastructure.Services;
+
+
+[ApiController]
+[Route("api/[controller]")]
+public class OrderController : ControllerBase
 {
-  using Infrastructure;
-  using Microsoft.AspNetCore.Mvc;
-  using Models;
+	private readonly IOrderService _orderService;
 
-  [ApiController]
-  [Route("api")]
-  public class OrderController : ControllerBase
-  {
-    [HttpGet]
-    [Route("order/{id}")]
+	public OrderController(IOrderService orderService) 
+	{
+		_orderService = orderService;
 
-    public IEnumerable<Order> GetOrders(int id = 1)
-    {
-      var data = new OrderService();
+	}
 
-      return data.GetOrdersForCompany(id);
-    }
-  }
+	[HttpGet("{id:int}")]
+	public async Task<ActionResult<IList<Order>>> GetOrders(int id)
+	{
+		var orders = await _orderService.GetOrders(id);
+
+		return new ActionResult<IList<Order>>(orders);
+	}
 }

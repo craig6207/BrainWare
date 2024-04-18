@@ -10,17 +10,19 @@
     </div>
   </div>
   <ul>
-    <li *ngFor="let order of orders">
-      {{order.dscription}} (Total: ${{order.orderTotal}})
+    <li *ngFor="let order of ordersFacade.orders()">
+      {{ order.description }} (Total: ${{ order.orderTotal }})
       <ul>
-        <li *ngFor="let orderProduct of order.orderProducts">
-          {{orderProduct.product.name}} ({{orderProduct.quantity}} &#64; ${{orderProduct.price}}/ea)
+        <li *ngFor="let orderProduct of order.orderProduct">
+          {{ orderProduct.product.name }} ({{ orderProduct.quantity }} &#64; ${{
+            orderProduct.price
+          }}/ea)
         </li>
       </ul>
     </li>
   </ul>
   <hr />
   <footer>
-    <p>&copy; {{year}} - BrainWare, Inc</p>
+    <p>&copy; {{ year }} - BrainWare, Inc</p>
   </footer>
 </div>
